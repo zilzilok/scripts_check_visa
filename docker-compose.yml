@@ -11,6 +11,8 @@ services:
       # - HTTPS_PROXY=http://user:pass@host:port
     # Give Chrome more shared memory (prevents random crashes)
     shm_size: "2gb"
+    env_file:
+      - .env
     # For quick local edits, you can mount your folder:
     # volumes:
     #   - ./:/app
