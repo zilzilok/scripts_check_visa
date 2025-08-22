@@ -3,17 +3,21 @@ import re
 import time
 from io import BytesIO
 from typing import Iterable, Tuple
+from dotenv import load_dotenv
 
 import requests
 from pdfminer.high_level import extract_text
 from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
-TELEGRAM_TOKEN = os.environ.get("TG_TOKEN", "")
-CHAT_ID = os.environ.get("TG_CHAT_ID", "")
+load_dotenv()  # puts .env values into os.environ
+
+TELEGRAM_TOKEN = os.getenv("TG_TOKEN")
+CHAT_ID = os.getenv("TG_CHAT_ID")
 
 ID_NAME = {
     "587006": "Adel",
@@ -86,9 +90,23 @@ def build_message(
     return "\n".join(parts)
 
 # Selenium setup
-options = Options()
-options.add_argument("--start-maximized")
-driver = webdriver.Chrome(options=options)
+def build_driver():
+    opts = Options()
+    opts.add_argument("--headless=new")
+    opts.add_argument("--no-sandbox")
+    opts.add_argument("--disable-dev-shm-usage")
+    opts.add_argument("--disable-gpu")
+    opts.add_argument("--window-size=1920,1080")
+
+    # point to Chromium binary
+    opts.binary_location = "/usr/bin/chromium"  # or "/usr/bin/chromium-browser" if that exists
+
+    # point to packaged chromedriver
+    svc = Service("/usr/bin/chromedriver")
+
+    return webdriver.Chrome(service=svc, options=opts)
+
+driver = build_driver()
 driver.get(URL)
 wait = WebDriverWait(driver, 20)
 

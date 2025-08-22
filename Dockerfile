@@ -6,12 +6,8 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 # Install Chromium & Chromedriver + basic deps
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    chromium \
-    chromium-driver \
-    ca-certificates \
-    fonts-liberation \
-    tzdata \
-    wget \
+    curl ca-certificates gnupg unzip \
+    chromium chromium-driver libnss3 libxss1 libgbm1 libasound2 fonts-liberation xdg-utils \
  && rm -rf /var/lib/apt/lists/*
 
 # Helpful envs for Selenium/Chrome

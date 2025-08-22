@@ -1,0 +1,16 @@
+version: "3.9"
+services:
+  worker:
+    build: .
+    container_name: check-visa-worker
+    restart: unless-stopped
+    # environment:
+      # - LOG_LEVEL=INFO
+      # Add proxies or secrets if needed, e.g.:
+      # - HTTP_PROXY=http://user:pass@host:port
+      # - HTTPS_PROXY=http://user:pass@host:port
+    # Give Chrome more shared memory (prevents random crashes)
+    shm_size: "2gb"
+    # For quick local edits, you can mount your folder:
+    # volumes:
+    #   - ./:/app
