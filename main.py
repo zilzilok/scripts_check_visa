@@ -22,7 +22,6 @@ CHAT_ID = os.getenv("TG_CHAT_ID")
 ID_NAME = {
     "587006": "Adel",
     "587884": "Amir",
-    "587779": "Tagir",
 }
 PATTERN = re.compile(r'(?<!\d)(?:' + '|'.join(map(re.escape, ID_NAME.keys())) + r')(?!\d)')
 
