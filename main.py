@@ -20,7 +20,6 @@ TELEGRAM_TOKEN = os.getenv("TG_TOKEN")
 CHAT_ID = os.getenv("TG_CHAT_ID")
 
 ID_NAME = {
-    "587006": "Adel",
     "587884": "Amir",
 }
 PATTERN = re.compile(r'(?<!\d)(?:' + '|'.join(map(re.escape, ID_NAME.keys())) + r')(?!\d)')
@@ -128,6 +127,7 @@ try:
             print("Date:", date_text)
 
             # Notify only on change to avoid spam
+            # TODO(zilzilok): check that new date more than last date
             if date_text and date_text != last_date:
                 pdf_url = element.get_attribute("href")
                 if not pdf_url:
